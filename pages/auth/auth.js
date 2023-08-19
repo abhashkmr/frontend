@@ -1,7 +1,6 @@
 import { Card, CardContent, Grid } from '@mui/material';
-import { RegistrationForm } from './register';
-import LoginForm from './login';
-
+import RegistrationForm from '../../components/Register';
+import LoginForm from '../../components/Login';
 const API_URL = 'http://localhost:3001';
  const  authenticateUser=async({email,password})=>{
     try {
@@ -31,7 +30,7 @@ function AuthPage (){
       <Card sx={{ width: 1/2 }}>
         <CardContent >
         <LoginForm onSubmit={authenticateUser}/>
-          {/* <RegistrationForm /> */}
+          <RegistrationForm />
           {/* Or use LoginForm */}
         </CardContent>
       </Card>
