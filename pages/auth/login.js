@@ -1,72 +1,42 @@
-import { useEffect, useState } from "react";
-import { TextField, Button, Grid, Box, Typography, Link } from "@mui/material";
-import { LoginFormWrapper } from "./styles";
+import { Card, CardContent, Grid } from '@mui/material';
+import RegistrationForm from '../../components/Register';
+import LoginForm from '../../components/Login';
+const API_URL = 'http://localhost:3001';
 
 
+const  authenticateUser=async({email,password})=>{
+    try {
+        const response = await fetch(`${API_URL}/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+    
+        if (response.status === 200) {
+         console.log('logged in')
+         window.location.href = '/';
+        } else {
+          // Handle login error, e.g., show error message to user
+        }
+      } catch (error) {
+       console.log(error)
+      }
+    };
 
-function LoginForm({onSubmit}) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit({ email, password });
+function Login (){
+    return (
+      <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
+        <Card sx={{ width: 1/2 }}>
+          <CardContent >
+          <LoginForm onSubmit={authenticateUser}/>
+            {/* <RegistrationForm /> */}
+            {/* Or use LoginForm */}
+          </CardContent>
+        </Card>
+      </Grid>
+    );
   }
-
-
-  return (
-    <LoginFormWrapper>
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
-      <Box sx={{ flexGrow: 1 }} justifyContent="center">
-      <form onSubmit={handleSubmit}>
-        <Grid container direction={"column"} spacing={4}>
-          <Grid item xs={8}>
-            
-            <TextField
-              label="Email"
-              type="email"
-              fullWidth
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <TextField
-              label="Password"
-              type="password"
-              fullWidth
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Button variant="contained" color="primary" fullWidth type="submit">
-              Login
-            </Button>
-           
-          </Grid>
-          
-        </Grid>
-        </form>
-        <Grid container direction={"row"}>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-      </Box>
-    </LoginFormWrapper>
-  );
-}
-
-export default LoginForm;
+  export default Login
