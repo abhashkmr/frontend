@@ -1,5 +1,4 @@
 import { Card, CardContent, Grid } from '@mui/material';
-import RegistrationForm from '../../components/Register';
 import LoginForm from '../../components/Login';
 const API_URL = 'http://localhost:3001';
 
@@ -19,6 +18,7 @@ const  authenticateUser=async({email,password})=>{
          window.location.href = '/';
         } else {
           // Handle login error, e.g., show error message to user
+          console.log(response)
         }
       } catch (error) {
        console.log(error)
