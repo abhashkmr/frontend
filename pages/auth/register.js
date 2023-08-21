@@ -1,28 +1,27 @@
 import { Card, CardContent, Grid } from '@mui/material';
 import RegistrationForm from '../../components/Register';
-import LoginForm from '../../components/Login';
 const API_URL = 'http://localhost:3001';
 
 
 const  registerUser=async({name,email,password})=>{
-    // try {
-    //     const response = await fetch(`${API_URL}/login`, {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ email, password }),
-    //     });
+    try {
+        const response = await fetch(`${API_URL}/user`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({name, email, password }),
+        });
     
-    //     if (response.status === 200) {
-    //      console.log('logged in')
-    //      window.location.href = '/';
-    //     } else {
-    //       // Handle login error, e.g., show error message to user
-    //     }
-    //   } catch (error) {
-    //    console.log(error)
-    //   }
+        if (response.status === 201) {
+          
+         window.location.href = '/auth/login';
+        } else {
+          console.log(response)
+        }
+      } catch (error) {
+       console.log(error)
+      }
     console.log(name,email,password);
     };
 
