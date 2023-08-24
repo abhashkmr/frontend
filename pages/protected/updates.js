@@ -13,19 +13,19 @@ const UpdateBox = () => {
   const [posted,setPosted]=useState(false)
 
   const handleContentChange = (newContent) => {
-    console.log(newContent)
     setContent(newContent);
   };
 
-  const handleSubmit = async ({ userId=1, content }) => {
-    console.log(content)
+  const handleSubmit = async ({content}) => {
     try {
+      const token = sessionStorage.getItem('jwtToken')
       const response = await fetch(`${API_URL}/updates`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ userId, content }),
+        body: JSON.stringify({ content }),
       });
 
       if (response.status === 201) {
