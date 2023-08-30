@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic"; // Import dynamic for client-only rendering
 import { Button ,Card,CardContent,Typography} from "@mui/material";
+import withAuth from '../../hoc/withAuth';
 import "react-quill/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -56,4 +57,4 @@ const UpdateBox = () => {
   );
 };
 
-export default UpdateBox;
+export default withAuth(UpdateBox);
