@@ -77,7 +77,7 @@ function LoginForm({onSubmit}) {
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/auth/register" variant="body2">
-                Don't have an account? Register
+                {`Don't have an account? Register`}
               </Link>
             </Grid>
           </Grid>
