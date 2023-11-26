@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import LoginForm from "../../components/Login";
-const API_URL = "http://localhost:3001";
+const API_URL = 'https://dailyupdates-backend.onrender.com'
 
 const authenticateUser = async ({ email, password }) => {
   try {

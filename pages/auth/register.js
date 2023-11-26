@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid } from '@mui/material';
 import RegistrationForm from '../../components/Register';
-const API_URL = 'http://localhost:3001';
+const API_URL = 'https://dailyupdates-backend.onrender.com'
 
 
 const  registerUser=async({name,email,password})=>{
