@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import dynamic from "next/dynamic"; // Import dynamic for client-only rendering
 import { Button ,Card,CardContent,Typography} from "@mui/material";
 import "react-quill/dist/quill.snow.css";
+import '../../index.css'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -53,44 +54,20 @@ const UpdateBox = () => {
   return (
     <Card style={{ width: '50%', margin: '0 auto' }}>
       <CardContent>
+      <div className="updates-container">
       <Typography variant="h5" gutterBottom>
       My Updates For Today
         </Typography>
         <ReactQuill value={content} onChange={handleContentChange} />
         <Button variant="contained" onClick={() => handleSubmit({ content })}>Submit</Button>
+        </div>
         {posted && (
           <div>
             <h1>Update posted</h1>
           </div>
         )}
       </CardContent>
-      <Timeline
-      sx={{
-        [`& .${timelineContentClasses.root}`]: {
-          flex: 0.2,
-        },
-      }}
-    >
-      <TimelineItem>
-        <TimelineOppositeContent color="textSecondary">
-          09:30 am
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Eat</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineOppositeContent color="textSecondary">
-          10:00 am
-        </TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot />
-        </TimelineSeparator>
-        <TimelineContent>Code</TimelineContent>
-      </TimelineItem>
-    </Timeline>
+      
     </Card>
   );
 };
