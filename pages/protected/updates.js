@@ -17,7 +17,7 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 
-const API_URL = "http://localhost:3001";
+const API_URL = "https://dailyupdates-backend.onrender.com";
 
 
 const UpdateBox = () => {
