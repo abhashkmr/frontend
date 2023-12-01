@@ -51,7 +51,27 @@ const UpdateBox = () => {
     }
   };
 
+  const logout = ()=>
+  {
+    const userConfirmation = window.confirm("Do you want to logout?");
+
+if (userConfirmation) {
+    // User clicked "OK"
+    sessionStorage.clear();
+    router.push('/auth/login')
+    
+
+    // alert("You clicked OK!");
+} else {
+    // User clicked "Cancel"
+    alert("You clicked Cancel!");
+}  }
+
   return (
+    <>
+    {/* adding logout btn */}
+    <div className="logoutbtn"><button onClick={logout}>Logout</button></div>
+
     <Card style={{ width: '50%', margin: '0 auto' }}>
       <CardContent>
       <div className="updates-container">
@@ -69,6 +89,7 @@ const UpdateBox = () => {
       </CardContent>
       
     </Card>
+    </>
   );
 };
 

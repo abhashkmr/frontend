@@ -4,3 +4,20 @@
     flex-direction: column;
     gap:1rem;
 }
+
+.logoutbtn button{
+    position: absolute;
+    right: 10%;
+
+    height: 2rem;
+    background-color: #1976D2;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color : white;
+    cursor: pointer;
+    transition: 1s;
+}
+.logoutbtn button:hover{
+    background-color: #1664b3;
+}
