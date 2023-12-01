@@ -12,6 +12,7 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent, { timelineContentClasses } from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+// import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent, Paper, Typography } from '@mui/material';
 
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -59,13 +60,8 @@ if (userConfirmation) {
     // User clicked "OK"
     sessionStorage.clear();
     router.push('/auth/login')
-    
 
-    // alert("You clicked OK!");
-} else {
-    // User clicked "Cancel"
-    alert("You clicked Cancel!");
-}  }
+} }
 
   return (
     <>
@@ -89,6 +85,32 @@ if (userConfirmation) {
       </CardContent>
       
     </Card>
+    {/* adding timeline */}
+    <Timeline>
+      <TimelineItem>
+        <TimelineDot color="primary" />
+        <TimelineContent>
+          <Typography variant="h6">Event 1</Typography>
+          <Typography>January 2023</Typography>
+        </TimelineContent>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineDot color="secondary" />
+        <TimelineContent>
+          <Typography variant="h6">Event 2</Typography>
+          <Typography>March 2023</Typography>
+        </TimelineContent>
+      </TimelineItem>
+      <TimelineItem>
+        <TimelineDot color="primary" />
+        <TimelineContent>
+          <Typography variant="h6">Event 3</Typography>
+          <Typography>June 2023</Typography>
+        </TimelineContent>
+      </TimelineItem>
+    </Timeline>
+
+
     </>
   );
 };

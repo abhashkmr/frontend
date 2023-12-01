@@ -10,7 +10,7 @@
     right: 10%;
 
     height: 2rem;
-    background-color: #1976D2;
+    background-color: #E02F2F;
     outline: none;
     border: none;
     border-radius: 5px;
@@ -19,5 +19,5 @@
     transition: 1s;
 }
 .logoutbtn button:hover{
-    background-color: #1664b3;
+    background-color: #bd2929;
 }
