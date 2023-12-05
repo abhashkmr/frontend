@@ -8,8 +8,9 @@
 .logoutbtn button{
     position: absolute;
     right: 10%;
-
+    padding: 0px 12px;
     height: 2rem;
+    font-size: small;
     background-color: #E02F2F;
     outline: none;
     border: none;

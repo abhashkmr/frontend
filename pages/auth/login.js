@@ -1,6 +1,7 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import LoginForm from "../../components/Login";
 const API_URL = 'https://dailyupdates-backend.onrender.com'
+var jwt = require("jsonwebtoken");
 
 const authenticateUser = async ({ email, password }) => {
   try {
@@ -15,7 +16,13 @@ const authenticateUser = async ({ email, password }) => {
     if (response.status === 200) {
       const data = await response.json();
       const token = data.token;
+      var decode1 = jwt.decode(token);
+      const jsonString = JSON.stringify(decode1);
+      console.log(jsonString);
+      localStorage.setItem("userdetail" , jsonString);
       sessionStorage.setItem("jwtToken", token);
+  
+
 
       window.location.href = "/protected/updates";
     } else {
