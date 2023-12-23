@@ -9,13 +9,24 @@ import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
+import parse from 'html-react-parser';
 import TimelineContent, {
   timelineContentClasses,
 } from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-// import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent, Paper, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save'; 
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@material-ui/core';
 
+
+import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const API_URL = "https://dailyupdates-backend.onrender.com";
@@ -24,14 +35,24 @@ const UpdateBox = () => {
   const [content, setContent] = useState("");
   const [updates, setUpdates] = useState([]);
   const [posted, setPosted] = useState(false);
+  const [editedContent, setEditedContent] = useState('');
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
   const router = useRouter();
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-      
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
   };
+  const handleEditContentChange = (oldcontent) => {
+    const contentToEdit = oldcontent;
+    setEditedContent(contentToEdit);
+  };
 
+  const handleEdit = (index , content) => {
+    console.log("editing")
+    setEditedContent(content);
+    setEditModalOpen(true);
+  };
   const fetchData = async () => {
     try {
       const userId = JSON.parse(localStorage.getItem("userdetail")).userId;
@@ -68,6 +89,35 @@ const UpdateBox = () => {
       console.log(error);
     }
   };
+   
+  const handleDelete = async (userUpdate , timeStamp)=>
+  {
+    const userId = JSON.parse(localStorage.getItem("userdetail")).userId;
+    const userConfirmation = window.confirm(`are you sure you want to delete the update at ${timeStamp}`);
+
+    if (userConfirmation) {
+      try {
+        const token = sessionStorage.getItem("jwtToken");
+        const response = await fetch(`${API_URL}/deleteUpdate`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({userUpdate , timeStamp , userId}),
+        });
+  
+        if (response.status === 201) {
+          alert('successfully deleted')
+        } else {
+          alert('deletion unsuccessfull')
+        }
+      } catch (error) {
+        console.log(error);
+      }
+  
+    }
+  }
 
   const logout = () => {
     const userConfirmation = window.confirm("Do you want to logout?");
@@ -77,18 +127,18 @@ const UpdateBox = () => {
       router.push("/auth/login");
     }
   };
+  const handleSaveEdit = () => {
+    const userConfirmation = window.confirm("Do you want to save?");
+
+    if (userConfirmation) {
+        alert('edit saved')
+    }
+  };
 
   useEffect(() => {
     fetchData();
-    console.log("Loading  updates::", updates);
   }, []);
 
-  function formatContent(originalString) {
-    var tempElement = document.createElement("div");
-    tempElement.innerHTML = originalString;
-    var formattedString = tempElement.textContent;
-    return formattedString;
-  }
 
   return (
     <>
@@ -119,21 +169,73 @@ const UpdateBox = () => {
         </CardContent>
       </Card>
       {/* adding timeline */}
-      <Timeline>
-        {updates.map((update) => (
-          <TimelineItem key={update.timestamp}>
-            <TimelineDot color="primary" />
-            <TimelineContent>
-              <Typography variant="h6">
-                {formatContent(update.content)}
-              </Typography>
-              <Typography variant="h7">
-                {new Date(update.timestamp).toLocaleString("en-US",options)}
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
+
+      <h1 className="myupdatesheading">My Updates</h1>
+      <div className="timeline-container">
+      <Timeline position="right" >
+
+      {updates.map((update, index) => (
+  <TimelineItem key={index}  >
+    <TimelineOppositeContent color="text.secondary" position="left" className="leftcontent">
+      {new Date(update.timestamp).toLocaleString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        })}
+    </TimelineOppositeContent>
+    <TimelineSeparator>
+      <TimelineDot color="primary" />
+      {index < updates.length - 1 && <TimelineConnector />}
+    </TimelineSeparator>
+    <TimelineContent className="rightcontent">
+    <p>{parse(update.content)}</p>
+    <div className= "actionbtns">
+    <IconButton
+        className="deletebtn"
+        aria-label="delete"
+        color="primary"
+        style={{ color: '#e02f2f' }}
+        onClick={() => handleDelete(update.content , update.timestamp )}
+      >
+        <DeleteIcon />
+  
+      </IconButton>
+      <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(index , update.content)} 
+        >
+          <EditIcon />
+        </IconButton>
+        </div>
+
+    
+    </TimelineContent>
+  </TimelineItem>
+))}
+
+<Dialog open={editModalOpen} onClose={() => setEditModalOpen(false)}>
+        <DialogTitle>Edit Content</DialogTitle>
+        <DialogContent>
+          <div className="updates-container">
+            
+            <ReactQuill value={editedContent}  onChange={handleEditContentChange} />
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditModalOpen(false)}>Cancel</Button>
+          <Button onClick={handleSaveEdit} color="primary">
+            <SaveIcon />
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
       </Timeline>
+      </div>
+
+
+
     </>
   );
 };

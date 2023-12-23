@@ -22,3 +22,22 @@
 .logoutbtn button:hover{
     background-color: #bd2929;
 }
+.myupdatesheading{
+    text-align: center;
+    font-weight: 400;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.actionbtns:hover{
+    background:none;
+    
+}
+.timeline-container{
+    width: 100ww;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.rightcontent{
+    display: flex;
+    justify-content: space-between;
+}
