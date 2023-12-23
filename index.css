@@ -4,3 +4,40 @@
     flex-direction: column;
     gap:1rem;
 }
+
+.logoutbtn button{
+    position: absolute;
+    right: 10%;
+    padding: 0px 12px;
+    height: 2rem;
+    font-size: small;
+    background-color: #E02F2F;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color : white;
+    cursor: pointer;
+    transition: 1s;
+}
+.logoutbtn button:hover{
+    background-color: #bd2929;
+}
+.myupdatesheading{
+    text-align: center;
+    font-weight: 400;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.actionbtns:hover{
+    background:none;
+    
+}
+.timeline-container{
+    width: 100ww;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.rightcontent{
+    display: flex;
+    justify-content: space-between;
+}
